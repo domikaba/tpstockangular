@@ -1,0 +1,40 @@
+<div>
+  <form (ngSubmit)="add(produitForm.value)" #produitForm="ngForm">
+    <div>
+      <label for="nom">Nom</label>
+      <input name="nom" id="nom">
+    </div>
+    <div>
+      <label for="fournisseur">Fournisseur</label>
+      <input name="fournisseur" id="fournisseur" ngModel>
+    </div>
+    <div>
+      <label for="age">Age</label>
+      <input name="age" id="age" ngModel>
+    </div>
+    <div>
+      <label for="description">Description</label>
+      <input name="description" id="description" ngModel>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<div *ngFor="let produit of produits let isOdd = odd">
+  <div style="display: table;clear: both">
+
+    <div style="width: 70vw; float: left">
+      <div *ngIf="isOdd else even"><p style="color:red;">{{produit.nom | uppercase }}</p></div>
+      <ng-template #even><p style="color: blue">{{produit.nom}}</p></ng-template>
+      <p>{{produit.prix | number:'.0'}} €</p>
+      <p>{{produit.descriptio.length>=20 ?  (produit.descriptio | slice:0:20|lowercase) + '...' :(produit.descriptio)}}</p>
+      <button (click)="remove(produit)">Remove</button>
+    </div>
+    <div style="width: 25vw; float: left">
+      <span *ngFor=" let i of produit.ingredient let last = last">
+        {{ i }}<span *ngIf="!last">,</span>
+      </span>
+    </div>
+  </div>
+</div>
+
